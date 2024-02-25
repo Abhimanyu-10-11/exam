@@ -1,0 +1,97 @@
+ 	#include<stdio.h>
+	#include<stdlib.h>
+	#include<string.h>
+	#define SIZE 5
+	
+	
+	struct BOOK{
+		int ISBN;
+		char title[20];
+		char author[20];
+		float price;
+		};
+
+	struct stack{
+		struct BOOK b[SIZE];
+		int top;
+		};
+
+	void push(struct stack *ps, struct BOOK b1);
+	struct BOOK pop(struct stack *ps);
+	void display(struct stack *ps);
+	
+	void main()
+	{
+		struct stack s;
+		struct BOOK b1,r1;
+		int choice;
+		s.top=-1;
+		do{
+			printf("\n 1:PUSH\t 2:POP\t 3:DISPLAY\t 4:QUIT");
+			printf("\n Enter your choice:");
+			scanf("%d",&choice);
+			switch(choice)
+			{
+				case 1:	 printf("Enter the ISBN, title, author and price of the book to push:");
+					scanf("%d %s %s %f, ",&b1.ISBN, b1.title, b1.author, &b1.price);
+					push(&s,b1);
+					break;
+				case 2: r1=pop(&s);
+					printf("The details of BOOK popped is :");
+					printf("\n ISBN =%d,  Title=%s, Author=%s, Price=%f", b1.ISBN, b1.title, b1.author, b1.price);					break;
+				case 3: display(&s);
+					break;
+					printf("\n Stack empty");
+				case 4 :printf("\nQuitting operation stack\n");	
+					break;
+				default :printf("No such option\n");
+					break;
+			}
+			}while(choice !=4);
+	}
+
+
+	void push(struct stack *ps, struct BOOK b1)
+	{
+		if(ps->top==SIZE-1)
+			printf("Stack Overflow\n");
+		else {
+			++(ps->top);
+			ps->b[ps->top].ISBN=b1.ISBN;
+			strcpy(ps->b[ps->top].title, b1.title);
+			strcpy(ps->b[ps->top].author, b1.author);
+			ps->b[ps->top].price=b1.price;
+		}
+	}
+	
+	struct BOOK pop(struct stack *ps)
+	{
+		struct BOOK r;
+		if(ps->top==-1)
+		{
+			printf("\n Stack Underflow");
+			exit(1);
+		}
+		r.ISBN=ps->b[ps->top].ISBN;
+		strcpy(r.title, ps->b[ps->top].title);
+		strcpy(r.author, ps->b[ps->top].author);
+		r.price=ps->b[ps->top].price; 
+		(ps->top)--;
+		return(r);
+	}	
+
+
+	void display(struct stack *ps)
+	{
+	int i;
+	if(ps->top==-1)
+		printf("\n Stack is empty");
+	else
+	{
+		printf("Stack contents are:\n");
+		for(i=ps->top;i>=0;i--)
+		{
+			printf("\n ISBN= %d   Title=%s  Author=%s   Price=%f", ps->b[i].ISBN, ps->b[i].title, ps->b[i].author, ps->b[i].price);
+		}
+	}
+}
